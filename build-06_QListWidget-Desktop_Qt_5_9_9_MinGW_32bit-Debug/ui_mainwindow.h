@@ -46,6 +46,8 @@ public:
     QPushButton *pushButton_7;
     QWidget *page_2;
     QWidget *page_3;
+    QWidget *widget;
+    QVBoxLayout *verticalLayout_2;
     QListWidget *listWidget;
 
     void setupUi(QMainWindow *MainWindow)
@@ -124,10 +126,19 @@ public:
         toolBox->addItem(page_2, QString::fromUtf8("\346\234\213\345\217\213"));
         page_3 = new QWidget();
         page_3->setObjectName(QStringLiteral("page_3"));
+        page_3->setGeometry(QRect(0, 0, 113, 177));
         toolBox->addItem(page_3, QString::fromUtf8("\351\273\221\345\220\215\345\215\225"));
-        listWidget = new QListWidget(centralwidget);
+        widget = new QWidget(centralwidget);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setGeometry(QRect(250, 120, 258, 212));
+        verticalLayout_2 = new QVBoxLayout(widget);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        listWidget = new QListWidget(widget);
         listWidget->setObjectName(QStringLiteral("listWidget"));
-        listWidget->setGeometry(QRect(270, 150, 256, 192));
+
+        verticalLayout_2->addWidget(listWidget);
+
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);

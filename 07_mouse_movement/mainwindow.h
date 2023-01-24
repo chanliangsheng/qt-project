@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "myqlabel.h"
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,5 +19,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QWidget *mydiget2;
 };
 #endif // MAINWINDOW_H

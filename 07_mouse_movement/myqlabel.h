@@ -3,19 +3,17 @@
 
 #include <QWidget>
 #include <QLabel>
+#include "mywidget.h"
 
 class myQlabel : public QLabel
 {
     Q_OBJECT
 public:
     explicit myQlabel(QWidget *parent = nullptr);
-    void enterEvent(QEvent *event);
-    void leaveEvent(QEvent *event);
+    ~myQlabel();
     void mousePressEvent(QMouseEvent *ev);
-
-
-signals:
-
+private:
+    myWidget *mydiget;
 };
 
 #endif // MYQLABEL_H

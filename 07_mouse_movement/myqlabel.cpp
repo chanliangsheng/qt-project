@@ -1,21 +1,17 @@
 #include "myqlabel.h"
 #include <QDebug>
+#include <QWidget>
 
 myQlabel::myQlabel(QWidget *parent) : QLabel(parent)
 {
 
 }
 
-void myQlabel::enterEvent(QEvent *event)
+myQlabel::~myQlabel()
 {
-    Q_UNUSED(event);
-    qDebug() << "鼠标进入了";
-}
+//    qDebug() << "析构";
 
-void myQlabel::leaveEvent(QEvent *event)
-{
-    Q_UNUSED(event);
-    qDebug() << "鼠标离开了";
+
 }
 
 void myQlabel::mousePressEvent(QMouseEvent *ev)
@@ -24,4 +20,15 @@ void myQlabel::mousePressEvent(QMouseEvent *ev)
 
     this->text();
     qDebug() << "鼠标点击了:" << this->text();
+
+
+    this->mydiget = new myWidget();
+
+    mydiget->setAttribute(Qt::WA_QuitOnClose , false);
+
+    mydiget->setAttribute(Qt::WA_DeleteOnClose);
+    mydiget->show();
+
 }
+
+

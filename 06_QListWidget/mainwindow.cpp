@@ -2,6 +2,9 @@
 #include "ui_mainwindow.h"
 #include <QListWidget>
 #include <QLabel>
+#include "myqtringlist.h"
+#include <QDebug>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,7 +13,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 
-    ui->listWidget->addItems(QStringList() << "test" << "fuck");
+    for (int i = 0; i < 10000; ++i) {
+        ui->listWidget->addItems(myQtringList() << "test" << "fuck");
+    }
+
+    connect(ui->listWidget , &QListWidget::itemClicked,[=](QListWidgetItem* item){
+        if (ui->listWidget->item(0) == item) {
+                qDebug() << "dfa";
+            }
+    });
 
 
 }

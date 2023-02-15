@@ -17,6 +17,7 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QListView>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
@@ -33,9 +34,10 @@ public:
     QGroupBox *groupBox;
     QGridLayout *gridLayout;
     QLabel *label;
-    QListWidget *listWidget;
+    QListWidget *listWidget_MS1;
     QLabel *label_2;
-    QListWidget *listWidget_2;
+    QListWidget *listWidget_MS2;
+    QListView *listView;
     QMenuBar *menuBar;
     QMenu *menu;
 
@@ -59,21 +61,24 @@ public:
 
         gridLayout->addWidget(label, 0, 0, 1, 1);
 
-        listWidget = new QListWidget(groupBox);
-        listWidget->setObjectName(QStringLiteral("listWidget"));
+        listWidget_MS1 = new QListWidget(groupBox);
+        listWidget_MS1->setObjectName(QStringLiteral("listWidget_MS1"));
 
-        gridLayout->addWidget(listWidget, 0, 1, 1, 1);
+        gridLayout->addWidget(listWidget_MS1, 0, 1, 1, 1);
 
         label_2 = new QLabel(groupBox);
         label_2->setObjectName(QStringLiteral("label_2"));
 
         gridLayout->addWidget(label_2, 1, 0, 1, 1);
 
-        listWidget_2 = new QListWidget(groupBox);
-        listWidget_2->setObjectName(QStringLiteral("listWidget_2"));
+        listWidget_MS2 = new QListWidget(groupBox);
+        listWidget_MS2->setObjectName(QStringLiteral("listWidget_MS2"));
 
-        gridLayout->addWidget(listWidget_2, 1, 1, 1, 1);
+        gridLayout->addWidget(listWidget_MS2, 1, 1, 1, 1);
 
+        listView = new QListView(centralwidget);
+        listView->setObjectName(QStringLiteral("listView"));
+        listView->setGeometry(QRect(240, 70, 71, 201));
         MainWindow->setCentralWidget(centralwidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));

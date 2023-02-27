@@ -24,18 +24,24 @@ QByteArray zlibToQtUncompr(const char *pZLIBData, uLongf dataLen/*, uLongf srcDa
 int main(int argc, char *argv[])
 {
 
-
-    QString base64String = "AAAAAAAALkA=";
+    using namespace std;
+    QString base64String = "AAAAAAAAAAAAAAAAAAAAQAAAAAAAABBAAAAAAAAAGEAAAAAAAAAgQAAAAAAAACRAAAAAAAAAKEAAAAAAAAAsQAAAAAAAADBAAAAAAAAAMkA=";
 
     QByteArray byteArray = QByteArray::fromBase64(base64String.toUtf8());
 
-    qDebug() << byteArray.toDouble();
+    QList<QByteArray> byteArrayList;
+    for (int i = 0; i < 10; i++) {
+        QByteArray byteArraySegment = byteArray.mid(i * 8, 8);
+        byteArrayList.append(byteArraySegment);
+    }
+    qDebug() << byteArray;
+    // 将字节数组转换为float类型
+    float number;
+    QDataStream stream(byteArray.right(8));
 
-    // 将字节数组转换为double类型
-    double number;
-    QDataStream stream(byteArray);
     stream.setByteOrder(QDataStream::LittleEndian); // 设置字节序为小端
     stream >> number;
 
     qDebug() << number; // 输出 64.0
+    return 0;
 }

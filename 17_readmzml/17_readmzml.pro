@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    base64.cpp \
     main.cpp \
     mainwindow.cpp \
     ms1.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
     mzml.cpp
 
 HEADERS += \
+    base64.h \
     mainwindow.h \
     ms1.h \
     ms2.h \
@@ -34,7 +36,7 @@ FORMS += \
 # 这是为了导入头文件路径和动态库的路径还有动态库的名字
 INCLUDEPATH += 3rdparty/MyLibary/include
 LIBS += -L $$PWD/3rdparty/MyLibary/lib -l tinyxml2
-
+LIBS += -lz
 
 # 定义一个变量
 MY_PWD = $$PWD
@@ -42,7 +44,15 @@ OUTPUT_PWD = $$OUT_PWD
 # 将变量MY_PWD中的正斜杠替换为反斜杠
 MY_PWD_WIN = $$replace(MY_PWD, /, \\)
 OUTPUT_PWD_WIN = $$replace(OUTPUT_PWD, /, \\)
+
 QMAKE_PRE_LINK = xcopy $$MY_PWD_WIN\3rdparty\MyLibary\lib\tinyxml2.dll $$OUTPUT_PWD_WIN\debug
+
+# 复制db文件夹到编译后项目中
+MY_DB_PWD = $$MY_PWD_WIN\db
+OUT_DB_PWD = $$OUTPUT_PWD_WIN\db
+
+copy_db = $$system("echo d| xcopy $${MY_DB_PWD} $${OUT_DB_PWD}")
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -3,45 +3,31 @@
 #include <QString>
 #include <QByteArray>
 #include <QApplication>
-#include <zlib.h>
+#include "base64.h"
+#include <iostream>
 
+typedef unsigned char uchar;
 
-//qUncompress好像对前四位的原数据长度没要求，乱填都可以，只不过性能有些差距。
-QByteArray zlibToQtUncompr(const char *pZLIBData, uLongf dataLen/*, uLongf srcDataLen = 0x100000*/)
+float bytesToFloat(std::vector<uchar> &byte_array)
 {
-    char *pQtData = new char[dataLen + 4];
-    char *pByte = (char *)(&dataLen);/*(char *)(&srcDataLen);*/
-    pQtData[3] = *pByte;
-    pQtData[2] = *(pByte + 1);
-    pQtData[1] = *(pByte + 2);
-    pQtData[0] = *(pByte + 3);
-    memcpy(pQtData + 4, pZLIBData, dataLen);
-    QByteArray qByteArray(pQtData, dataLen + 4);
-    delete []pQtData;
-    return qUncompress(qByteArray);
+    float output;
+
+    *((uchar*)(&output) + 3) = byte_array[3];
+    *((uchar*)(&output) + 2) = byte_array[2];
+    *((uchar*)(&output) + 1) = byte_array[1];
+    *((uchar*)(&output) + 0) = byte_array[0];
+    return output;
 }
 
+using namespace std;
 int main(int argc, char *argv[])
 {
+    const string test_string = "qgYXQ3";
 
-    using namespace std;
-    QString base64String = "AAAAAAAAAAAAAAAAAAAAQAAAAAAAABBAAAAAAAAAGEAAAAAAAAAgQAAAAAAAACRAAAAAAAAAKEAAAAAAAAAsQAAAAAAAADBAAAAAAAAAMkA=";
+    std::vector<BYTE> result =  base64_decode(test_string);//result的大小为4
 
-    QByteArray byteArray = QByteArray::fromBase64(base64String.toUtf8());
+    float test = bytesToFloat(result);
 
-    QList<QByteArray> byteArrayList;
-    for (int i = 0; i < 10; i++) {
-        QByteArray byteArraySegment = byteArray.mid(i * 8, 8);
-        byteArrayList.append(byteArraySegment);
-    }
-    qDebug() << byteArray;
-    // 将字节数组转换为float类型
-    float number;
-    QDataStream stream(byteArray.right(8));
+    cout << test << endl;
 
-    stream.setByteOrder(QDataStream::LittleEndian); // 设置字节序为小端
-    stream >> number;
-
-    qDebug() << number; // 输出 64.0
-    return 0;
 }
